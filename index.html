@@ -1,302 +1,283 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Desafios da Floresta</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta charset="UTF-8" />
+  <title>Desafios da Floresta — Dois de Muitos</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(to bottom, #f5ede1, #f0e8d8);
-    }
-
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { margin: 0; background: linear-gradient(to bottom,#f5ede1,#f0e8d8); color:#222; }
+    a { color: inherit; }
     .hero {
-      background: linear-gradient(to right, #2d5016, #2b7a9b, #c23b22);
-      color: white;
-      padding: 50px 20px;
-      text-align: center;
+      background: linear-gradient(to right,#2d5016,#2b7a9b,#c23b22);
+      color: #fff; padding: 42px 18px 30px; text-align:center;
     }
-
-    .hero h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-
-    .stats {
-      max-width: 1000px;
-      margin: 40px auto 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .tabs {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .tab-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border: 2px solid #2d5016;
-      margin-bottom: 30px;
-    }
-
-    .tab-buttons button {
-      padding: 15px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      background: #fff;
-    }
-
-    .tab-buttons button.active {
-      background: #2d5016;
-      color: white;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .item-card {
-      background: white;
-      border: 2px solid #ccc;
-      border-radius: 12px;
-      padding: 20px;
-      transition: 0.3s;
-    }
-
-    .item-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
-
-    .item-card h3 {
-      color: #2d5016;
-      margin: 10px 0;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      background: #2b7a9b;
-      color: white;
-      margin-top: 10px;
-    }
-
-    .btn {
-      margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      background: #2d5016;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-
-    .btn.red {
-      background: #c23b22;
-    }
-
-    .footer {
-      margin-top: 60px;
-      background: linear-gradient(to right, #2d5016, #c23b22);
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
+    .motivacao { max-width:900px; margin:0 auto 18px; font-style:italic; font-size:15px; opacity:.95; }
+    h1 { font-size:38px; margin:8px 0; }
+    .links-topo { margin-top:18px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+    .links-topo a { text-decoration:none; background:#fff; color:#2d5016; padding:8px 14px; border-radius:20px; font-weight:700; }
+    .stats { max-width:1000px; margin:26px auto 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; padding:0 12px; }
+    .card { background:rgba(255,255,255,.16); border-radius:10px; padding:18px; text-align:center; border:1px solid rgba(255,255,255,.22); }
+    .card h2 { margin:6px 0; font-size:28px; }
+    .tabs { max-width:1100px; margin:36px auto; padding:0 18px; }
+    .tab-buttons { display:grid; grid-template-columns:repeat(3,1fr); border:2px solid #2d5016; border-radius:8px; overflow:hidden; margin-bottom:22px; }
+    .tab-buttons button { padding:12px 8px; border:0; background:#fff; cursor:pointer; font-weight:700; }
+    .tab-buttons button.active { background:#2d5016; color:#fff; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+    .item-card { background:#fff; border:2px solid #dcdcdc; border-radius:12px; padding:16px; transition:.22s; }
+    .item-card:hover { transform:translateY(-6px); box-shadow:0 12px 24px rgba(0,0,0,.12); }
+    .item-card h3 { color:#2d5016; margin:6px 0; }
+    .badge { display:inline-block; padding:6px 10px; border-radius:18px; font-size:13px; background:#2b7a9b; color:#fff; margin-top:8px; }
+    .btn { margin-top:12px; width:100%; padding:10px; border:0; background:#2d5016; color:#fff; font-weight:700; border-radius:8px; cursor:pointer; }
+    .btn.red { background:#c23b22; }
+    .certificados { max-width:1000px; margin:34px auto; padding:0 18px; }
+    .certificados h2 { color:#2d5016; text-align:center; margin-bottom:14px; }
+    .meta { max-width:1000px; margin:26px auto; padding:18px; border-radius:10px; background:linear-gradient(90deg, rgba(45,80,22,0.06), rgba(194,59,34,0.04)); border:1px solid rgba(45,80,22,0.12); }
+    .meta h3 { margin:0 0 8px 0; color:#2d5016; }
+    .notice { max-width:1000px; margin:14px auto; padding:12px 18px; background:#fffbe6; border:1px solid #f0dca8; border-radius:8px; color:#6b4f00; }
+    .footer { margin-top:40px; background:linear-gradient(to right,#2d5016,#c23b22); color:#fff; padding:26px 18px; text-align:center; font-size:15px; }
+    .footer a { color:#fff; text-decoration:underline; font-weight:700; }
+    @media (max-width:520px){ h1{font-size:28px} .motivacao{font-size:14px} }
   </style>
 </head>
-
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>🌿 Desafios da Floresta</h1>
-  <p>"Atividades manuais que conectam você com a natureza"</p>
-
-  <div class="stats">
-    <div class="card">
-      <h2 id="points">500</h2>
-      <p>Pontos Totais</p>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="motivacao">
+      Este projeto nasce da troca real entre crianças neurodivergentes. Observando a
+      necessidade de tirá-las das telas, criamos oficinas inclusivas mediadas por um jogo
+      interativo — a ancestralidade trabalhando no mundo digital para resgatar saberes e
+      ajudar a curar a Mãe Terra.
     </div>
-    <div class="card">
-      <h2 id="completed">0</h2>
-      <p>Desafios Completados</p>
+
+    <h1>🌿 Desafios da Floresta</h1>
+
+    <div class="links-topo">
+      <a href="https://contatos2dm-byte.github.io/2dmgame/" target="_blank" rel="noopener">🎮 Painel do Jogo</a>
+      <a href="https://github.com/contatos2dm-byte/2dmgame/" target="_blank" rel="noopener">💻 GitHub</a>
+      <a href="https://discord.gg/pMZ3ft6j" target="_blank" rel="noopener">💬 Discord</a>
     </div>
-    <div class="card">
-      <h2 id="rewards">0</h2>
-      <p>Recompensas Resgatadas</p>
+
+    <div class="stats" aria-label="Estatísticas do projeto">
+      <div class="card">
+        <div style="font-size:14px;opacity:.9">Pontos Totais</div>
+        <h2 id="points">500</h2>
+      </div>
+
+      <div class="card">
+        <div style="font-size:14px;opacity:.9">Desafios Feitos</div>
+        <h2 id="completed">2</h2>
+        <div style="font-size:13px;margin-top:6px;color:#fff;opacity:.95">foram feitos 2 desafios</div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:14px;opacity:.9">Recompensas (CNX)</div>
+        <h2 id="cnx">175 CNX</h2>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- TABS -->
-<div class="tabs">
-  <div class="tab-buttons">
-    <button class="active" onclick="openTab('desafios', this)">🎯 Desafios</button>
-    <button onclick="openTab('recompensas', this)">🎁 Recompensas</button>
-    <button onclick="openTab('desejos', this)">❤️ Desejos</button>
+  <!-- META DO JOGO (estratégico) -->
+  <div class="meta" role="region" aria-labelledby="meta-title">
+    <h3 id="meta-title">🎯 Meta do jogo</h3>
+    <p>
+      A meta do projeto é realizar a submissão de uma <strong>PPP (Parceria/Projeto de Política Pública)</strong>
+      como convênio social para transformar o resultado em um <strong>Casebre de Acolhimento Institucional</strong>
+      para jovens com TEA, conforme as diretrizes e garantias previstas nas Leis <strong>12.764/2012</strong>
+      (Política Nacional de Proteção dos Direitos da Pessoa com Transtorno do Espectro Autista)
+      e <strong>13.146/2015</strong> (Estatuto da Pessoa com Deficiência).
+    </p>
   </div>
 
-  <!-- DESAFIOS -->
-  <div id="desafios" class="tab-content active">
-    <h2>Quadro de Desafios</h2>
-    <div class="grid" id="challengeList"></div>
+  <!-- AVISO -->
+  <div class="notice" role="note">
+    Atuação registrada: <strong>Foram realizados 2 desafios</strong> e <strong>175 CNX</strong> foram concedidos como
+    recompensas para participantes. Vídeo e música do projeto estão linkados abaixo como certificados digitais.
   </div>
 
-  <!-- RECOMPENSAS -->
-  <div id="recompensas" class="tab-content">
-    <h2>Loja de Recompensas</h2>
-    <div class="grid" id="rewardList"></div>
+  <!-- TABS (conteúdo resumido) -->
+  <div class="tabs" aria-hidden="false">
+    <div class="tab-buttons" role="tablist" aria-label="Abas principais">
+      <button class="active" onclick="openTab('desafios', this)" role="tab" aria-selected="true">🎯 Desafios</button>
+      <button onclick="openTab('recompensas', this)" role="tab">🎁 Recompensas</button>
+      <button onclick="openTab('desejos', this)" role="tab">❤️ Desejos</button>
+    </div>
+
+    <div id="desafios" class="tab-content active" role="tabpanel">
+      <h2 style="color:#2d5016">Quadro de Desafios</h2>
+      <p style="color:#444">Escolha um desafio manual e ganhe pontos para resgatar recompensas!</p>
+
+      <div class="grid" id="challengeList">
+        <!-- cards gerados por JS -->
+      </div>
+    </div>
+
+    <div id="recompensas" class="tab-content" role="tabpanel">
+      <h2 style="color:#c23b22">Loja de Recompensas</h2>
+      <p style="color:#444">Resgate seus pontos por aprendizados, experiências e materiais!</p>
+
+      <div class="grid" id="rewardList"></div>
+    </div>
+
+    <div id="desejos" class="tab-content" role="tabpanel">
+      <h2 style="color:#2b7a9b">Minha Lista de Desejos</h2>
+      <p style="color:#444">Coisas que você gostaria de aprender e fazer. Adicione seus próprios desejos!</p>
+
+      <div class="grid" id="wishlist"></div>
+    </div>
   </div>
 
-  <!-- DESEJOS -->
-  <div id="desejos" class="tab-content">
-    <h2>Minha Lista de Desejos</h2>
-    <div class="grid" id="wishlist"></div>
+  <!-- CERTIFICADOS -->
+  <div class="certificados" aria-labelledby="cert-title">
+    <h2 id="cert-title">🎖 Certificados Digitais & Obras</h2>
+
+    <div class="grid">
+      <div class="item-card">
+        <h3>🎬 Vídeo do Projeto (YouTube Short)</h3>
+        <p style="margin:6px 0;color:#555">Certificado digital em vídeo — registro das atividades e depoimentos.</p>
+        <a class="btn" href="https://youtube.com/shorts/YJBqx56424Q?si=YxxbDgyB4eVHONHg" target="_blank" rel="noopener">Abrir Vídeo</a>
+      </div>
+
+      <div class="item-card">
+        <h3>🎵 Música do Projeto</h3>
+        <p style="margin:6px 0;color:#555">Trilha sonora criada para os encontros e oficinas.</p>
+        <a class="btn red" href="https://youtu.be/2iFENwKyXVI?si=srlQyJEx-tb6TsP_" target="_blank" rel="noopener">Ouvir Música</a>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- FOOTER -->
-<div class="footer">
-  🌿 Desafios da Floresta • Conectando crianças com a natureza
-</div>
+  <!-- RODAPÉ / CONTATO -->
+  <div class="footer" role="contentinfo">
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="margin-bottom:10px">📩 <strong>Contato, participação, comentários ou doação:</strong></div>
+      <div style="font-size:16px;margin-bottom:12px">
+        <a href="mailto:contatos.2dm@gmail.com">contatos.2dm@gmail.com</a>
+      </div>
 
-<script>
-  let userPoints = 500;
-  let completed = 0;
-  let redeemed = 0;
+      <div style="opacity:.95">Links oficiais: &nbsp;
+        <a href="https://contatos2dm-byte.github.io/2dmgame/" target="_blank" rel="noopener">Painel</a> •
+        <a href="https://github.com/contatos2dm-byte/2dmgame/" target="_blank" rel="noopener">GitHub</a> •
+        <a href="https://discord.gg/pMZ3ft6j" target="_blank" rel="noopener">Discord</a>
+      </div>
 
-  const challenges = [
-    { id: 1, title: "Construir brinquedo com madeira", points: 50 },
-    { id: 2, title: "Pintura natural com terra", points: 30 },
-    { id: 3, title: "Cestaria simples", points: 40 }
-  ];
+      <div style="margin-top:14px; font-size:13px; opacity:.9">Att, Akã</div>
+    </div>
+  </div>
 
-  const rewardsData = [
-    { id: 1, title: "Ebook Artes Indígenas", cost: 100 },
-    { id: 2, title: "Workshop Online", cost: 200 }
-  ];
+  <script>
+    // --- Dados iniciais (ajustados conforme pedido) ---
+    let userPoints = 500;
+    let completedChallenges = 2; // indicado: "foram feitos dois desafios"
+    let totalCNX = 175; // 175 CNX concedidos
 
-  const wishes = [
-    { title: "Aprender cerâmica", category: "Arte" },
-    { title: "Fazer arco e flecha", category: "Ofício" }
-  ];
+    const challenges = [
+      { id: 1, title: "Construir brinquedo com madeira", points: 50 },
+      { id: 2, title: "Pintura natural com terra", points: 30 },
+      { id: 3, title: "Cestaria simples", points: 40 }
+    ];
 
-  function updateStats() {
-    document.getElementById("points").innerText = userPoints;
-    document.getElementById("completed").innerText = completed;
-    document.getElementById("rewards").innerText = redeemed;
-  }
+    const rewardsData = [
+      { id: 1, title: "Ebook Artes Indígenas", cost: 100 },
+      { id: 2, title: "Workshop Online", cost: 200 }
+    ];
 
-  function renderChallenges() {
-    const list = document.getElementById("challengeList");
-    list.innerHTML = "";
+    const wishes = [
+      { title: "Aprender cerâmica", category: "Arte" },
+      { title: "Fazer arco e flecha", category: "Ofício" }
+    ];
 
-    challenges.forEach(c => {
-      const div = document.createElement("div");
-      div.className = "item-card";
-      div.innerHTML = `
-        <h3>${c.title}</h3>
-        <p>+${c.points} pontos</p>
-        <button class="btn" onclick="completeChallenge(${c.id}, ${c.points})">Concluir</button>
-      `;
-      list.appendChild(div);
-    });
-  }
-
-  function renderRewards() {
-    const list = document.getElementById("rewardList");
-    list.innerHTML = "";
-
-    rewardsData.forEach(r => {
-      const div = document.createElement("div");
-      div.className = "item-card";
-      div.innerHTML = `
-        <h3>${r.title}</h3>
-        <p>Custo: ${r.cost} pontos</p>
-        <button class="btn red" onclick="redeem(${r.cost})">Resgatar</button>
-      `;
-      list.appendChild(div);
-    });
-  }
-
-  function renderWishes() {
-    const list = document.getElementById("wishlist");
-    list.innerHTML = "";
-
-    wishes.forEach(w => {
-      const div = document.createElement("div");
-      div.className = "item-card";
-      div.innerHTML = `
-        <h3>${w.title}</h3>
-        <span class="badge">${w.category}</span>
-      `;
-      list.appendChild(div);
-    });
-  }
-
-  function completeChallenge(id, points) {
-    userPoints += points;
-    completed++;
-    updateStats();
-    alert("Desafio concluído!");
-  }
-
-  function redeem(cost) {
-    if (userPoints >= cost) {
-      userPoints -= cost;
-      redeemed++;
-      updateStats();
-      alert("Recompensa resgatada!");
-    } else {
-      alert("Pontos insuficientes!");
+    // --- Renderização ---
+    function updateStats() {
+      document.getElementById("points").innerText = userPoints;
+      document.getElementById("completed").innerText = completedChallenges;
+      document.getElementById("cnx").innerText = totalCNX + " CNX";
     }
-  }
 
-  function openTab(tab, btn) {
-    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
-    document.querySelectorAll(".tab-buttons button").forEach(el => el.classList.remove("active"));
-    document.getElementById(tab).classList.add("active");
-    btn.classList.add("active");
-  }
+    function renderChallenges() {
+      const list = document.getElementById("challengeList");
+      list.innerHTML = "";
+      challenges.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "item-card";
+        div.innerHTML = `
+          <h3>${c.title}</h3>
+          <p style="color:#444;margin:6px 0">+${c.points} pontos</p>
+          <button class="btn" onclick="completeChallenge(${c.id}, ${c.points})">Concluir</button>
+        `;
+        list.appendChild(div);
+      });
+    }
 
-  renderChallenges();
-  renderRewards();
-  renderWishes();
-  updateStats();
-</script>
+    function renderRewards() {
+      const list = document.getElementById("rewardList");
+      list.innerHTML = "";
+      rewardsData.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "item-card";
+        div.innerHTML = `
+          <h3>${r.title}</h3>
+          <p style="color:#444;margin:6px 0">Custo: ${r.cost} pontos</p>
+          <button class="btn red" onclick="redeem(${r.cost})">Resgatar</button>
+        `;
+        list.appendChild(div);
+      });
+    }
 
+    function renderWishes() {
+      const list = document.getElementById("wishlist");
+      list.innerHTML = "";
+      wishes.forEach(w => {
+        const div = document.createElement("div");
+        div.className = "item-card";
+        div.innerHTML = `
+          <h3>${w.title}</h3>
+          <span class="badge">${w.category}</span>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // --- Ações (simuladas) ---
+    function completeChallenge(id, points) {
+      // evitar duplicados: se já completou 2 desafios, considerar limite exemplar
+      completedChallenges++;
+      userPoints += points;
+      totalCNX += Math.round(points * 0.5); // exemplo: converter parte dos pontos em CNX
+      updateStats();
+      alert("Desafio concluído! +" + points + " pontos");
+    }
+
+    function redeem(cost) {
+      if (userPoints >= cost) {
+        userPoints -= cost;
+        updateStats();
+        alert("Recompensa resgatada!");
+      } else {
+        alert("Pontos insuficientes!");
+      }
+    }
+
+    // --- Abas ---
+    function openTab(tabId, btn) {
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".tab-buttons button").forEach(el => el.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      if (btn) btn.classList.add("active");
+    }
+
+    // Inicializa
+    renderChallenges();
+    renderRewards();
+    renderWishes();
+    updateStats();
+
+    // garantia de acessibilidade: permitir abrir primeira aba sem botão clicado
+    window.openTab = openTab;
+    window.completeChallenge = completeChallenge;
+    window.redeem = redeem;
+  </script>
 </body>
 </html>
