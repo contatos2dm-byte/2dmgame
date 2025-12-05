@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafios da Floresta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #f5ede1, #f0e8d8);
+    }
+
+    .hero {
+      background: linear-gradient(to right, #2d5016, #2b7a9b, #c23b22);
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .stats {
+      max-width: 1000px;
+      margin: 40px auto 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .tabs {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .tab-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 2px solid #2d5016;
+      margin-bottom: 30px;
+    }
+
+    .tab-buttons button {
+      padding: 15px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .tab-buttons button.active {
+      background: #2d5016;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .item-card {
+      background: white;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      transition: 0.3s;
+    }
+
+    .item-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .item-card h3 {
+      color: #2d5016;
+      margin: 10px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      background: #2b7a9b;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .btn {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #2d5016;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .btn.red {
+      background: #c23b22;
+    }
+
+    .footer {
+      margin-top: 60px;
+      background: linear-gradient(to right, #2d5016, #c23b22);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🌿 Desafios da Floresta</h1>
+  <p>"Atividades manuais que conectam você com a natureza"</p>
+
+  <div class="stats">
+    <div class="card">
+      <h2 id="points">500</h2>
+      <p>Pontos Totais</p>
+    </div>
+    <div class="card">
+      <h2 id="completed">0</h2>
+      <p>Desafios Completados</p>
+    </div>
+    <div class="card">
+      <h2 id="rewards">0</h2>
+      <p>Recompensas Resgatadas</p>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab-buttons">
+    <button class="active" onclick="openTab('desafios', this)">🎯 Desafios</button>
+    <button onclick="openTab('recompensas', this)">🎁 Recompensas</button>
+    <button onclick="openTab('desejos', this)">❤️ Desejos</button>
+  </div>
+
+  <!-- DESAFIOS -->
+  <div id="desafios" class="tab-content active">
+    <h2>Quadro de Desafios</h2>
+    <div class="grid" id="challengeList"></div>
+  </div>
+
+  <!-- RECOMPENSAS -->
+  <div id="recompensas" class="tab-content">
+    <h2>Loja de Recompensas</h2>
+    <div class="grid" id="rewardList"></div>
+  </div>
+
+  <!-- DESEJOS -->
+  <div id="desejos" class="tab-content">
+    <h2>Minha Lista de Desejos</h2>
+    <div class="grid" id="wishlist"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  🌿 Desafios da Floresta • Conectando crianças com a natureza
+</div>
+
+<script>
+  let userPoints = 500;
+  let completed = 0;
+  let redeemed = 0;
+
+  const challenges = [
+    { id: 1, title: "Construir brinquedo com madeira", points: 50 },
+    { id: 2, title: "Pintura natural com terra", points: 30 },
+    { id: 3, title: "Cestaria simples", points: 40 }
+  ];
+
+  const rewardsData = [
+    { id: 1, title: "Ebook Artes Indígenas", cost: 100 },
+    { id: 2, title: "Workshop Online", cost: 200 }
+  ];
+
+  const wishes = [
+    { title: "Aprender cerâmica", category: "Arte" },
+    { title: "Fazer arco e flecha", category: "Ofício" }
+  ];
+
+  function updateStats() {
+    document.getElementById("points").innerText = userPoints;
+    document.getElementById("completed").innerText = completed;
+    document.getElementById("rewards").innerText = redeemed;
+  }
+
+  function renderChallenges() {
+    const list = document.getElementById("challengeList");
+    list.innerHTML = "";
+
+    challenges.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "item-card";
+      div.innerHTML = `
+        <h3>${c.title}</h3>
+        <p>+${c.points} pontos</p>
+        <button class="btn" onclick="completeChallenge(${c.id}, ${c.points})">Concluir</button>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function renderRewards() {
+    const list = document.getElementById("rewardList");
+    list.innerHTML = "";
+
+    rewardsData.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "item-card";
+      div.innerHTML = `
+        <h3>${r.title}</h3>
+        <p>Custo: ${r.cost} pontos</p>
+        <button class="btn red" onclick="redeem(${r.cost})">Resgatar</button>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function renderWishes() {
+    const list = document.getElementById("wishlist");
+    list.innerHTML = "";
+
+    wishes.forEach(w => {
+      const div = document.createElement("div");
+      div.className = "item-card";
+      div.innerHTML = `
+        <h3>${w.title}</h3>
+        <span class="badge">${w.category}</span>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function completeChallenge(id, points) {
+    userPoints += points;
+    completed++;
+    updateStats();
+    alert("Desafio concluído!");
+  }
+
+  function redeem(cost) {
+    if (userPoints >= cost) {
+      userPoints -= cost;
+      redeemed++;
+      updateStats();
+      alert("Recompensa resgatada!");
+    } else {
+      alert("Pontos insuficientes!");
+    }
+  }
+
+  function openTab(tab, btn) {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-buttons button").forEach(el => el.classList.remove("active"));
+    document.getElementById(tab).classList.add("active");
+    btn.classList.add("active");
+  }
+
+  renderChallenges();
+  renderRewards();
+  renderWishes();
+  updateStats();
+</script>
+
+</body>
+</html>
